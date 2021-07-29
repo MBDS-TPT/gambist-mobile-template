@@ -8,31 +8,30 @@ import argonTheme from "../constants/Theme";
 class DrawerItem extends React.Component {
   renderIcon = () => {
     const { title, focused } = this.props;
-
     switch (title) {
       case "Home":
         return (
           <Icon
-            name="shop"
-            family="ArgonExtra"
+            name="home"
+            family="FontAwesome5"
             size={14}
             color={focused ? "white" : argonTheme.COLORS.PRIMARY}
           />
         );
-      case "Elements":
+      case "My Bets":
         return (
           <Icon
-            name="map-big"
-            family="ArgonExtra"
+            name="casino"
+            family="MaterialIcons"
             size={14}
             color={focused ? "white" : argonTheme.COLORS.ERROR}
           />
         );
-      case "Articles":
+      case "Recent Matches":
         return (
           <Icon
-            name="spaceship"
-            family="ArgonExtra"
+            name="history"
+            family="MaterialIcons"
             size={14}
             color={focused ? "white" : argonTheme.COLORS.PRIMARY}
           />
@@ -40,30 +39,26 @@ class DrawerItem extends React.Component {
       case "Profile":
         return (
           <Icon
-            name="chart-pie-35"
-            family="ArgonExtra"
+            name="user"
+            family="AntDesign"
             size={14}
             color={focused ? "white" : argonTheme.COLORS.WARNING}
           />
         );
-      case "Account":
-        return (
-          <Icon
-            name="calendar-date"
-            family="ArgonExtra"
-            size={14}
-            color={focused ? "white" : argonTheme.COLORS.INFO}
-          />
-        );
-      case "Getting Started":
+      case "QR Code":
         return (<Icon
-          name="spaceship"
-          family="ArgonExtra"
+          name="qr-code-2"
+          family="MaterialIcons"
           size={14}
           color={focused ? "white" : "rgba(0,0,0,0.5)"}
         />);
       case "Log out":
-        return <Icon />;
+        return <Icon 
+          name="logout"
+          family="MaterialCommunityIcons"
+          size={14}
+          color={focused ? "white" : "rgba(0,0,0,0.5)"}
+        />;
       default:
         return null;
     }
@@ -80,13 +75,7 @@ class DrawerItem extends React.Component {
     return (
       <TouchableOpacity
         style={{ height: 60 }}
-        onPress={() =>
-          title == "Getting Started"
-            ? Linking.openURL(
-                "https://demos.creative-tim.com/argon-pro-react-native/docs/"
-              ).catch(err => console.error("An error occurred", err))
-            : navigation.navigate(title)
-        }
+        onPress={() => navigation.navigate(title)}
       >
         <Block flex row style={containerStyles}>
           <Block middle flex={0.1} style={{ marginRight: 5 }}>

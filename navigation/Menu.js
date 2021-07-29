@@ -12,10 +12,10 @@ import { DrawerItem as DrawerCustomItem } from '../components';
 function CustomDrawerContent({ drawerPosition, navigation, profile, focused, state, ...rest }) {
   const screens = [
     "Home", 
+    "Recent Matches",
+    "My Bets",
     "Profile",
-    "Account",
-    "Elements",
-    "Articles",
+    "QR Code",
   ];
   return (
     <Block
@@ -39,9 +39,9 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
             })}
             <Block flex style={{ marginTop: 24, marginVertical: 8, paddingHorizontal: 8 }}>
               <Block style={{ borderColor: "rgba(0,0,0,0.2)", width: '100%', borderWidth: StyleSheet.hairlineWidth }}/>
-              <Text color="#8898AA" style={{ marginTop: 16, marginLeft: 8 }}>DOCUMENTATION</Text>
+              <Text color="#8898AA" style={{ marginTop: 16, marginLeft: 8 }}>Account</Text>
             </Block>
-            <DrawerCustomItem title="Getting Started" navigation={navigation} />
+            <DrawerCustomItem title="Logout" navigation={navigation} />
         </ScrollView>
       </Block>
     </Block>
