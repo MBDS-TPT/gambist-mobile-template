@@ -10,8 +10,9 @@ import { Block } from "galio-framework";
 // screens
 import Home from "../screens/Home";
 import Onboarding from "../screens/Onboarding";
-// import Profile from "../screens/Profile";
 import Register from "../screens/Register";
+
+
 // drawer
 import CustomDrawerContent from "./Menu";
 
@@ -25,46 +26,6 @@ const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
-// function ProfileStack(props) {
-//   return (
-//     <Stack.Navigator initialRouteName="Profile" mode="card" headerMode="screen">
-//       <Stack.Screen
-//         name="Profile"
-//         component={Profile}
-//         options={{
-//           header: ({ navigation, scene }) => (
-//             <Header
-//               transparent
-//               white
-//               title="Profile"
-//               navigation={navigation}
-//               scene={scene}
-//             />
-//           ),
-//           cardStyle: { backgroundColor: "#FFFFFF" },
-//           headerTransparent: true
-//         }}
-//       />
-//             <Stack.Screen
-//         name="Pro"
-//         component={Pro}
-//         options={{
-//           header: ({ navigation, scene }) => (
-//             <Header
-//               title=""
-//               back
-//               white
-//               transparent
-//               navigation={navigation}
-//               scene={scene}
-//             />
-//           ),
-//           headerTransparent: true
-//         }}
-//       />
-//     </Stack.Navigator>
-//   );
-// }
 
 function HomeStack(props) {
   return (
@@ -136,8 +97,6 @@ function AppStack(props) {
       initialRouteName="Home"
     >
       <Drawer.Screen name="Home" component={HomeStack} />
-      {/* <Drawer.Screen name="Profile" component={ProfileStack} /> */}
-      {/* <Drawer.Screen name="Account" component={Register} /> */}
     </Drawer.Navigator>
   );
 }
