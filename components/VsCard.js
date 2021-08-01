@@ -9,6 +9,7 @@ import Card from './Card';
 class VsCard extends React.Component {
   render() {
     return (
+      <>
         <Block flex row>
             <Card
                 flex
@@ -33,9 +34,11 @@ class VsCard extends React.Component {
                 imageStyle={styles.cardImageRadius}
                 imageBlockStyle={{ padding: theme.SIZES.BASE / 2 }}
             />
-            {/* <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE }} /> */}
-            {/* <Card item={articles[2]} /> */}
         </Block>
+        <Block>
+          <Text size={12} style={styles.text} color={argonTheme.COLORS.ACTIVE} bold>Voir Details {'>>'} </Text>
+        </Block>
+      </>
     );
   }
 }
@@ -62,6 +65,10 @@ const styles = StyleSheet.create({
         {translateY: -40}
       ],
       zIndex:2,
+  },
+  text: {
+    textAlign:'right',
+    marginBottom:20
   }
 });
 
