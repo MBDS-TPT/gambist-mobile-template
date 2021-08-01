@@ -30,7 +30,38 @@ class Header extends React.Component {
       />
     );
   }
-  
+  renderOptions = () => {
+    const { navigation, optionLeft, optionRight } = this.props;
+
+    return (
+      <Block row style={styles.options}>
+        {/* <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('Pro')}>
+          <Block row middle>
+            <Icon name="diamond" family="ArgonExtra" style={{ paddingRight: 8 }} color={argonTheme.COLORS.ICON} />
+            <Text size={16} style={styles.tabTitle}>{'All Sports'}</Text>
+          </Block>
+        </Button>
+        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Pro')}>
+          <Block row middle>
+            <Icon size={16} name="bag-17" family="ArgonExtra" style={{ paddingRight: 8 }} color={argonTheme.COLORS.ICON}/>
+            <Text size={16} style={styles.tabTitle}>{'Football'}</Text>
+          </Block>
+        </Button>
+        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Pro')}>
+          <Block row middle>
+            <Icon size={16} name="bag-17" family="ArgonExtra" style={{ paddingRight: 8 }} color={argonTheme.COLORS.ICON}/>
+            <Text size={16} style={styles.tabTitle}>{'Basketball'}</Text>
+          </Block>
+        </Button>
+        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Pro')}>
+          <Block row middle>
+            <Icon size={16} name="bag-17" family="ArgonExtra" style={{ paddingRight: 8 }} color={argonTheme.COLORS.ICON}/>
+            <Text size={16} style={styles.tabTitle}>{'Volleyball'}</Text>
+          </Block>
+        </Button> */}
+      </Block>
+    );
+  }
   renderTabs = () => {
     const { tabs, tabIndex, navigation } = this.props;
     const defaultTab = tabs && tabs[0] && tabs[0].id;
@@ -50,8 +81,8 @@ class Header extends React.Component {
       return (
         <Block center>
           {search ? this.renderSearch() : null}
-          {/* {options ? this.renderOptions() : null} */}
-          {/* {tabs ? this.renderTabs() : null} */}
+          {options ? this.renderOptions() : null}
+          {tabs ? this.renderTabs() : null}
         </Block>
       );
     }

@@ -2,10 +2,12 @@ import argonTheme from './Theme';
 import articles from './articles';
 import Images from './Images';
 import tabs from './tabs';
+import matches from './matches';
 
 export {
   articles, 
   argonTheme,
   Images,
-  tabs
+  tabs,
+  matches
 };

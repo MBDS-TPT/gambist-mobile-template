@@ -26,6 +26,24 @@ const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
+const categoryTabs = [
+  {
+    id:-1,
+    title:'All Sports'
+  },
+  {
+    id:0,
+    title:'Football'
+  },
+  {
+    id:1,
+    title:'Basketball'
+  },
+  {
+    id:2,
+    title:'Volleyball'
+  }
+]
 
 function HomeStack(props) {
   return (
@@ -38,9 +56,9 @@ function HomeStack(props) {
             <Header
               title="Home"
               search
-              options
               navigation={navigation}
               scene={scene}
+              tabs={categoryTabs}
             />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
