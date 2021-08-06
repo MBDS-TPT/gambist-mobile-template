@@ -41,6 +41,8 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
               <Block style={{ borderColor: "rgba(0,0,0,0.2)", width: '100%', borderWidth: StyleSheet.hairlineWidth }}/>
               <Text color="#8898AA" style={{ marginTop: 16, marginLeft: 8 }}>Account</Text>
             </Block>
+            <DrawerCustomItem title="Register" navigation={navigation} />
+            <DrawerCustomItem title="Login" navigation={navigation} />
             <DrawerCustomItem title="Log out" navigation={navigation} />
         </ScrollView>
       </Block>

@@ -11,6 +11,7 @@ import { Block } from "galio-framework";
 import Home from "../screens/Home";
 import Onboarding from "../screens/Onboarding";
 import Register from "../screens/Register";
+import Login from '../screens/Login';
 
 
 // drawer
@@ -115,6 +116,8 @@ function AppStack(props) {
       initialRouteName="Home"
     >
       <Drawer.Screen name="Home" component={HomeStack} />
+      <Drawer.Screen name="Login" component={Login} />
+      <Drawer.Screen name="Register" component={Register} />
     </Drawer.Navigator>
   );
 }
