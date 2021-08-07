@@ -23,7 +23,7 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
       forceInset={{ top: 'always', horizontal: 'never' }}
     >
       <Block flex={0.06} style={styles.header}>
-        <Image styles={styles.logo} source={Images.Logo} />
+        {/* <Image styles={styles.logo} source={Images.Logo} /> */}
       </Block>
       <Block flex style={{ paddingLeft: 8, paddingRight: 14 }}>
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
@@ -43,6 +43,7 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
             </Block>
             <DrawerCustomItem title="Register" navigation={navigation} />
             <DrawerCustomItem title="Login" navigation={navigation} />
+            <DrawerCustomItem title="Detail" navigation={navigation} />
             <DrawerCustomItem title="Log out" navigation={navigation} />
         </ScrollView>
       </Block>

@@ -90,7 +90,8 @@ class Register extends React.Component {
                           />
                         }
                       />
-                      {/* <Block row style={styles.passwordCheck}>
+                    </Block>
+                    {/* <Block row style={styles.passwordCheck}>
                         <Text size={12} color={argonTheme.COLORS.MUTED}>
                           Error message here:
                         </Text>
@@ -99,7 +100,12 @@ class Register extends React.Component {
                           Error
                         </Text>
                       </Block> */}
-                      
+                    <Block middle>
+                      <Button color="primary" style={styles.createButton}>
+                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          CREATE ACCOUNT
+                        </Text>
+                      </Button>
                     </Block>
                     <Block row width={width * 0.75} style={styles.passwordCheck}>
                       <Text color="#8898AA" size={12}>Already have an account?</Text>
@@ -112,13 +118,6 @@ class Register extends React.Component {
                         }}
                       >
                         Signin
-                      </Button>
-                    </Block>
-                    <Block middle>
-                      <Button color="primary" style={styles.createButton}>
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          CREATE ACCOUNT
-                        </Text>
                       </Button>
                     </Block>
                   </KeyboardAvoidingView>
@@ -181,7 +180,7 @@ const styles = StyleSheet.create({
   },
   createButton: {
     width: width * 0.5,
-    marginTop: 25
+    marginTop: 30
   }
 });
 

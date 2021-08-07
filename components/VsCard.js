@@ -7,7 +7,10 @@ import matches from '../constants/matches';
 import Card from './Card';
 
 class VsCard extends React.Component {
+  
   render() {
+  const {seeMore} = this.props;
+
     return (
       <>
         <Block flex row>
@@ -22,7 +25,7 @@ class VsCard extends React.Component {
                 imageStyle={styles.cardImageRadius}
                 imageBlockStyle={{ padding: theme.SIZES.BASE / 2 }}
             />
-            <Text style={styles.versus}>νѕ</Text>
+            <Text style={styles.versus}>VS</Text>
             <Card
                 flex
                 borderless
@@ -35,14 +38,19 @@ class VsCard extends React.Component {
                 imageBlockStyle={{ padding: theme.SIZES.BASE / 2 }}
             />
         </Block>
-        <Block>
-          <Text size={12} style={styles.text} color={argonTheme.COLORS.ACTIVE} bold>Voir Details {'>>'} </Text>
-        </Block>
+        {seeMore && (
+          <Block>
+            <Text size={12} style={styles.text} color={argonTheme.COLORS.ACTIVE} bold>See more {'>>'} </Text>
+          </Block>
+        )}
       </>
     );
   }
 }
 
+VsCard.propTypes = {
+  seeMore: PropTypes.bool,
+}
 
 const styles = StyleSheet.create({
   card: {
@@ -54,7 +62,8 @@ const styles = StyleSheet.create({
   },
   versus: {
       backgroundColor:theme.COLORS.FACEBOOK,
-      fontSize: 40,
+      fontFamily:'Helvetica',
+      fontSize: 30,
       position: 'absolute',
       backgroundColor: theme.COLORS.NEUTRAL,
       color: theme.COLORS.PLACEHOLDER,

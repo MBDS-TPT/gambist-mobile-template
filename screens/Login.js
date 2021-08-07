@@ -83,10 +83,18 @@ class Login extends React.Component {
                         </Text>
                       </Block>
                     </Block>
+                    
+                    <Block middle>
+                      <Button color="primary" style={styles.createButton}>
+                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          SIGN IN
+                        </Text>
+                      </Button>
+                    </Block>
                     <Block row width={width * 0.75} style={styles.passwordCheck}>
                       <Text color="#8898AA" size={12}>Don't have an account?</Text>
                       <Button
-                        style={{ width: 100, position:"relative", bottom:22, right:14 }}
+                        style={{ width: 100, position:"relative", bottom:22, right:20 }}
                         color="transparent"
                         textStyle={{
                           color: argonTheme.COLORS.PRIMARY,
@@ -94,13 +102,6 @@ class Login extends React.Component {
                         }}
                       >
                         Signup
-                      </Button>
-                    </Block>
-                    <Block middle>
-                      <Button color="primary" style={styles.createButton}>
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          SIGN IN
-                        </Text>
                       </Button>
                     </Block>
                   </KeyboardAvoidingView>

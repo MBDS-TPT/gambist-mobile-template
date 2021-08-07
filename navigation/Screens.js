@@ -12,6 +12,7 @@ import Home from "../screens/Home";
 import Onboarding from "../screens/Onboarding";
 import Register from "../screens/Register";
 import Login from '../screens/Login';
+import Detail from '../screens/Detail';
 
 
 // drawer
@@ -60,6 +61,27 @@ function HomeStack(props) {
               navigation={navigation}
               scene={scene}
               tabs={categoryTabs}
+            />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function DetailStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Detail"
+        component={Detail}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Detail"
+              navigation={navigation}
+              scene={scene}
             />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
@@ -118,6 +140,7 @@ function AppStack(props) {
       <Drawer.Screen name="Home" component={HomeStack} />
       <Drawer.Screen name="Login" component={Login} />
       <Drawer.Screen name="Register" component={Register} />
+      <Drawer.Screen name="Detail" component={DetailStack} />
     </Drawer.Navigator>
   );
 }
