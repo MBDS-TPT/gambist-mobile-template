@@ -13,8 +13,8 @@ import { Images, argonTheme } from "../constants";
 
 const { width, height } = Dimensions.get("screen");
 
-class Login extends React.Component {
-  render() {
+const Login = (props) => {
+  const { navigation } = props;
     return (
       <Block flex middle>
         <StatusBar hidden />
@@ -100,6 +100,7 @@ class Login extends React.Component {
                           color: argonTheme.COLORS.PRIMARY,
                           fontSize: 12
                         }}
+                        onPress={() => navigation.navigate('Register')}
                       >
                         Signup
                       </Button>
@@ -112,7 +113,6 @@ class Login extends React.Component {
         </ImageBackground>
       </Block>
     );
-  }
 }
 
 const styles = StyleSheet.create({
