@@ -162,9 +162,24 @@ function DetailStack(props) {
   );
 }
 
+function AuthStack(props) {
+  return (
+    <Stack.Navigator initialRouteName="Login" headerMode="none">
+      <Stack.Screen option={{
+          headerTransparent: true
+        }}
+        name="Login" component={Login} />
+      <Stack.Screen option={{
+          headerTransparent: true
+        }}
+        name="Register" component={Register} />
+    </Stack.Navigator>
+  );
+}
+
 export default function OnboardingStack(props) {
   return (
-    <Stack.Navigator mode="card" headerMode="none">
+    <Stack.Navigator initialRouteName="Onboarding" mode="card" headerMode="none">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
@@ -172,10 +187,13 @@ export default function OnboardingStack(props) {
           headerTransparent: true
         }}
       />
+      <Stack.Screen name="Auth" component={AuthStack} />
       <Stack.Screen name="App" component={AppStack} />
     </Stack.Navigator>
   );
 }
+
+
 
 function AppStack(props) {
   return (
@@ -211,9 +229,7 @@ function AppStack(props) {
       <Drawer.Screen name="Home" component={HomeStack} />
       <Drawer.Screen name="Recent Matches" component={RecentMatchesStack} />
       <Drawer.Screen name="My Bets" component={MyBetsStack} />
-      <Drawer.Screen name="Login" component={Login} />
       <Drawer.Screen name="Profile" component={ProfileStack} />
-      <Drawer.Screen name="Register" component={Register} />
       <Drawer.Screen name="Detail" component={DetailStack} />
     </Drawer.Navigator>
   );

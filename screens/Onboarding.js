@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState, useEffect} from 'react';
+import {ActivityIndicator} from 'react-native';
 import {
   ImageBackground,
   Image,
@@ -12,10 +13,27 @@ const { height, width } = Dimensions.get("screen");
 
 import argonTheme from "../constants/Theme";
 import Images from "../constants/Images";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-class Onboarding extends React.Component {
-  render() {
-    const { navigation } = this.props;
+const Onboarding = (props) => {
+
+    const { navigation } = props;
+
+    const [animating, setAnimating] = useState(true);
+
+    useEffect(() => {
+      setTimeout(() => {
+        setAnimating(false);
+        //Check if user_id is set or not
+        //If not then send for Authentication
+        //else send to Home Screen
+        AsyncStorage.getItem('userId').then((value) =>
+          navigation.replace(
+            value === null ? 'Auth' : 'App'
+          ),
+        );
+      }, 5000);
+    }, []);
 
     return (
       <Block flex style={styles.container}>
@@ -28,24 +46,36 @@ class Onboarding extends React.Component {
         </Block>
         <Block center>
           {/* <Image source={Images.LogoOnboarding} style={styles.logo} /> */}
+          <ActivityIndicator
+            animating={animating}
+            color="#FFFFFF"
+            size="large"
+            style={styles.activityIndicator}
+          />
         </Block>
         <Block flex space="between" style={styles.padded}>
             <Block flex space="around" style={{ zIndex: 2 }}>
-              <Block center>
-                <Button
-                  style={styles.button}
-                  color={argonTheme.COLORS.SECONDARY}
-                  onPress={() => navigation.navigate("App")}
-                  textStyle={{ color: argonTheme.COLORS.BLACK }}
-                >
-                  Start With Gambist
-                </Button>
+              <Block style={styles.title}>
+                <Block>
+                  <Text color="white" size={40}>
+                    Gambist
+                  </Text>
+                </Block>
+                <Block>
+                  <Text color="white" size={40}>
+                    Mobile
+                  </Text>
+                </Block>
+                <Block style={styles.subTitle}>
+                  <Text color="white" size={16}>
+                    Online bet platform now avalaible in app.
+                  </Text>
+                </Block>
               </Block>
           </Block>
         </Block>
       </Block>
     );
-  }
 }
 
 const styles = StyleSheet.create({
@@ -76,6 +106,10 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     marginTop: 20
+  },
+  activityIndicator: {
+    alignItems: 'center',
+    height: 10,
   }
 });
 
