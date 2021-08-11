@@ -9,10 +9,13 @@ import { Block } from "galio-framework";
 
 // screens
 import Home from "../screens/Home";
+import RecentMatches from "../screens/RecentMatches";
+import MyBets from "../screens/MyBets";
 import Onboarding from "../screens/Onboarding";
 import Register from "../screens/Register";
 import Login from '../screens/Login';
 import Detail from '../screens/Detail';
+import Profile from "../screens/Profile";
 
 
 // drawer
@@ -47,6 +50,30 @@ const categoryTabs = [
   }
 ]
 
+function ProfileStack(props) {
+  return (
+    <Stack.Navigator initialRouteName="Profile" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              transparent
+              white
+              title="Profile"
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#FFFFFF" },
+          headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function HomeStack(props) {
   return (
     <Stack.Navigator mode="card" headerMode="screen">
@@ -61,6 +88,50 @@ function HomeStack(props) {
               navigation={navigation}
               scene={scene}
               tabs={categoryTabs}
+            />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+
+function RecentMatchesStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Recent Matches"
+        component={RecentMatches}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Recent Matches"
+              navigation={navigation}
+              scene={scene}
+              tabs={categoryTabs}
+            />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function MyBetsStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="My Bets"
+        component={MyBets}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="My Bets"
+              navigation={navigation}
+              scene={scene}
             />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
@@ -138,7 +209,10 @@ function AppStack(props) {
       initialRouteName="Home"
     >
       <Drawer.Screen name="Home" component={HomeStack} />
+      <Drawer.Screen name="Recent Matches" component={RecentMatchesStack} />
+      <Drawer.Screen name="My Bets" component={MyBetsStack} />
       <Drawer.Screen name="Login" component={Login} />
+      <Drawer.Screen name="Profile" component={ProfileStack} />
       <Drawer.Screen name="Register" component={Register} />
       <Drawer.Screen name="Detail" component={DetailStack} />
     </Drawer.Navigator>
