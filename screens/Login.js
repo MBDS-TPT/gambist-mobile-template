@@ -10,6 +10,7 @@ import { Block, Checkbox, Text, theme } from "galio-framework";
 import { UserService } from "../services/user/user.service";
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -47,7 +48,7 @@ const Login = (props) => {
             .then(() => {
               AsyncStorage.setItem("userName", res.data.username)
                 .then(() => {
-                  //navigation.navigate("App");
+                  navigation.navigate("App");
                   console.log('Local storage saved');
                 })
                 .catch((error) => {
