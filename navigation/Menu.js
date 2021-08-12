@@ -5,11 +5,12 @@ import {
   Image
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
-
+import {  Platform } from 'react-native';
 import Images from "../constants/Images";
 import { DrawerItem as DrawerCustomItem } from '../components';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function CustomDrawerContent({ drawerPosition, navigation, profile, focused, state, ...rest }) {
+const CustomDrawerContent = ({ drawerPosition, navigation, profile, focused, state, ...rest }) =>{
   const screens = [
     "Home", 
     "Recent Matches",
@@ -17,6 +18,22 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
     "Profile",
     "QR Code",
   ];
+
+  
+  
+  const Disconnect =  async (navigation) =>  {
+    const asyncStorageKeys = await AsyncStorage.getAllKeys();
+    if (asyncStorageKeys.length > 0) {
+      if (Platform.OS === 'android') {
+        await AsyncStorage.clear();
+      }
+      if (Platform.OS === 'ios') {
+        await AsyncStorage.multiRemove(asyncStorageKeys);
+      }
+    }
+    navigation.navigate('Login');
+  };
+
   return (
     <Block
       style={styles.container}
@@ -42,7 +59,7 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
               <Text color="#8898AA" style={{ marginTop: 16, marginLeft: 8 }}>Account</Text>
             </Block>
             <DrawerCustomItem title="Detail"    navigation={navigation} />
-            <DrawerCustomItem title="Log out"   navigation={navigation} />
+            <DrawerCustomItem title="Log out"  onPress={Disconnect(navigation)}/>
         </ScrollView>
       </Block>
     </Block>

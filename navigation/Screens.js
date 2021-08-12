@@ -168,7 +168,7 @@ function AuthStack(props) {
       <Stack.Screen option={{
           headerTransparent: true
         }}
-        name="Login" component={Login} />
+        name="Login" navigation={props.navigation} component={Login} />
       <Stack.Screen option={{
           headerTransparent: true
         }}
@@ -188,7 +188,7 @@ export default function OnboardingStack(props) {
         }}
       />
       <Stack.Screen name="Auth" component={AuthStack} />
-      <Stack.Screen name="App" component={AppStack} />
+      <Stack.Screen name="App"  component={AppStack} />
     </Stack.Navigator>
   );
 }
