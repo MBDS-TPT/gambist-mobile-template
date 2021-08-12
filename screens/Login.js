@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   StyleSheet,
   ImageBackground,
@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
-
+import { UserService } from "../services/user/user.service";
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
 
@@ -15,6 +15,60 @@ const { width, height } = Dimensions.get("screen");
 
 const Login = (props) => {
   const { navigation } = props;
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [loginEmail, setLoginEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const onLogin = () => {
+    console.log("Login");
+    setErrorMessage(undefined);
+    if (!loginEmail) {
+      console.log("Login empty");
+      setErrorMessage('Please fill Email');
+      return;
+    }
+    if (!password) {
+      console.log("Password empty");
+      setErrorMessage('Please fill Password');
+      return;
+    }
+    setLoading(true);
+    console.log('Calling user service with infos ', loginEmail, password);
+    UserService.login(loginEmail, password)
+      .then((res) => {
+        console.log('Login Call')
+        setLoading(false)
+        if (res.message == "OK") {
+          console.log('Login OK')
+          const userIdToString = res.data.id.toString();
+          AsyncStorage.setItem("userId", userIdToString)
+            .then(() => {
+              AsyncStorage.setItem("userName", res.data.username)
+                .then(() => {
+                  //navigation.navigate("App");
+                  console.log('Local storage saved');
+                })
+                .catch((error) => {
+                  setErrorMessage(error + "");
+                });
+            })
+            .catch((error) => {
+              setErrorMessage(error + "");
+            });
+        } else {
+          console.log('Wrong password');
+          setErrorMessage(res.message+ "");
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+        console.log('Error with login');
+        setErrorMessage(error + "");
+      });
+  };
     return (
       <Block flex middle>
         <StatusBar hidden />
@@ -48,8 +102,12 @@ const Login = (props) => {
                   >
                     <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                       <Input
+                        autoCapitalize='none'
                         borderless
                         placeholder="Email"
+                        onChangeText={(UserEmail) =>
+                          setLoginEmail(UserEmail)
+                        }
                         iconContent={
                           <Icon
                             size={16}
@@ -66,6 +124,10 @@ const Login = (props) => {
                         password
                         borderless
                         placeholder="Password"
+                        onChangeText={(UserPassword) =>
+                          setPassword(UserPassword)
+                        }
+                        secureTextEntry={true}
                         iconContent={
                           <Icon
                             size={16}
@@ -83,9 +145,16 @@ const Login = (props) => {
                         </Text>
                       </Block>
                     </Block>
+                    { errorMessage && 
+                      <Block row >
+                          <Text bold size={12} color={argonTheme.COLORS.ERROR}>
+                            {errorMessage}
+                          </Text>
+                      </Block>
+                    }
                     
                     <Block middle>
-                      <Button color="primary" style={styles.createButton}>
+                      <Button onPress={onLogin} color="primary" style={styles.createButton} loading={loading}>
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           SIGN IN
                         </Text>

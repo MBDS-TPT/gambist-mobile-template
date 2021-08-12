@@ -32,7 +32,7 @@ const Onboarding = (props) => {
             value === null ? 'Auth' : 'App'
           ),
         );
-      }, 5000);
+      }, 2000);
     }, []);
 
     return (
