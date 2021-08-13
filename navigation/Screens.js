@@ -16,6 +16,7 @@ import Register from "../screens/Register";
 import Login from '../screens/Login';
 import Detail from '../screens/Detail';
 import Profile from "../screens/Profile";
+import Qrcode from "../screens/Qrcode";
 
 import { CategoryService } from "../services/category/category.service";
 
@@ -193,6 +194,27 @@ function MyBetsStack(props) {
   );
 }
 
+function QrCodeStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="QR Code"
+        component={Qrcode}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="QR Code"
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function DetailStack(props) {
   return (
     <Stack.Navigator mode="card" headerMode="screen">
@@ -246,7 +268,6 @@ export default function OnboardingStack(props) {
 }
 
 
-
 function AppStack(props) {
   return (
     <Drawer.Navigator
@@ -283,6 +304,7 @@ function AppStack(props) {
       <Drawer.Screen name="My Bets" component={MyBetsStack} />
       <Drawer.Screen name="Profile" component={ProfileStack} />
       <Drawer.Screen name="Detail" component={DetailStack} />
+      <Drawer.Screen name="QR Code" component={QrCodeStack} />
     </Drawer.Navigator>
   );
 }
