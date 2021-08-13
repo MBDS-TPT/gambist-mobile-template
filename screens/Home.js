@@ -30,7 +30,7 @@ function Home(props) {
         contentContainerStyle={styles.matches}>
         <Block>
           {matcheslist.map(match => {
-            return <VsCard seeMore matchpassed={match} />
+            return <VsCard seeMore matchpassed={match}/>
           })}
         </Block>
       </ScrollView>

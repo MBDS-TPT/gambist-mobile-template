@@ -13,7 +13,7 @@ class Detail extends React.Component {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.detail}>
         <Block>
-          {/* <Text color={argonTheme.COLORS.PRIMARY}> {"< "}Back</Text> */}
+          <Text color={argonTheme.COLORS.PRIMARY} size={8} onPress={()=>this.props.navigation.goBack()}> {"< "}Back</Text>
           <Block flex style={styles.nameInfo}>
               <Text size={10} bold color="#525F7F" style={{ marginTop: 10 }}>
                 Match date: 28 July 2021 12:15

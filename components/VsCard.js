@@ -9,7 +9,7 @@ import Card from './Card';
 class VsCard extends React.Component {
   
   render() {
-  const {seeMore} = this.props;
+  const {seeMore, navigation} = this.props;
 
     return (
       <>
@@ -21,7 +21,6 @@ class VsCard extends React.Component {
                     matches[0]
                 }
                 style={styles.card}
-                location="Los Angeles, CA"
                 imageStyle={styles.cardImageRadius}
                 imageBlockStyle={{ padding: theme.SIZES.BASE / 2 }}
             />
@@ -40,7 +39,7 @@ class VsCard extends React.Component {
         </Block>
         {seeMore && (
           <Block>
-            <Text size={12} style={styles.text} color={argonTheme.COLORS.ACTIVE} bold>See more {'>>'} </Text>
+            <Text onPress={()=> navigation.navigate("Detail")} size={12} style={styles.text} color={argonTheme.COLORS.ACTIVE} bold>See more {'>>'} </Text>
           </Block>
         )}
       </>

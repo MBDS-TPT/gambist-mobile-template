@@ -240,7 +240,7 @@ export default function OnboardingStack(props) {
         }}
       />
       <Stack.Screen name="Auth" component={AuthStack} />
-      <Stack.Screen name="App" component={AppStack} />
+      <Stack.Screen name="App"  component={AppStack} />
     </Stack.Navigator>
   );
 }
