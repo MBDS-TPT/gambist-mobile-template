@@ -48,7 +48,8 @@ const Login = (props) => {
             .then(() => {
               AsyncStorage.setItem("userName", res.data.username)
                 .then(() => {
-                  navigation.navigate("App");
+                  console.log(navigation);
+                  navigation.replace("App");
                   console.log('Local storage saved');
                 })
                 .catch((error) => {
