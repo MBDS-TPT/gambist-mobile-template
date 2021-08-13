@@ -1,9 +1,24 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Linking } from "react-native";
 import { Block, Text, theme } from "galio-framework";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {  Platform } from 'react-native';
 
 import Icon from "./Icon";
 import argonTheme from "../constants/Theme";
+
+const Disconnect =  async (navigation) =>  {
+  const asyncStorageKeys = await AsyncStorage.getAllKeys();
+  if (asyncStorageKeys.length > 0) {
+    if (Platform.OS === 'android') {
+      await AsyncStorage.clear();
+    }
+    if (Platform.OS === 'ios') {
+      await AsyncStorage.multiRemove(asyncStorageKeys);
+    }
+  }
+  navigation.replace('Auth');
+};
 
 class DrawerItem extends React.Component {
   renderIcon = () => {
@@ -63,9 +78,10 @@ class DrawerItem extends React.Component {
         return null;
     }
   };
+  
 
   render() {
-    const { focused, title, navigation } = this.props;
+    const { focused, title, navigation, isLogout } = this.props;
 
     const containerStyles = [
       styles.defaultStyle,
@@ -75,7 +91,7 @@ class DrawerItem extends React.Component {
     return (
       <TouchableOpacity
         style={{ height: 60 }}
-        onPress={() => navigation.navigate(title)}
+        onPress={() => isLogout? Disconnect(navigation):navigation.navigate(title)}
       >
         <Block flex row style={containerStyles}>
           <Block middle flex={0.1} style={{ marginRight: 5 }}>

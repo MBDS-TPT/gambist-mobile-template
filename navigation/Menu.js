@@ -5,10 +5,9 @@ import {
   Image
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
-import {  Platform } from 'react-native';
-import Images from "../constants/Images";
-import { DrawerItem as DrawerCustomItem } from '../components';
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { DrawerItem as DrawerCustomItem , Icon} from '../components';
+import { Images, argonTheme } from "../constants";
+
 
 const CustomDrawerContent = ({ drawerPosition, navigation, profile, focused, state, ...rest }) =>{
   const screens = [
@@ -18,29 +17,20 @@ const CustomDrawerContent = ({ drawerPosition, navigation, profile, focused, sta
     "Profile",
     "QR Code",
   ];
-
   
-  
-  const Disconnect =  async (navigation) =>  {
-    const asyncStorageKeys = await AsyncStorage.getAllKeys();
-    if (asyncStorageKeys.length > 0) {
-      if (Platform.OS === 'android') {
-        await AsyncStorage.clear();
-      }
-      if (Platform.OS === 'ios') {
-        await AsyncStorage.multiRemove(asyncStorageKeys);
-      }
-    }
-    navigation.navigate('Login');
-  };
-
   return (
     <Block
       style={styles.container}
       forceInset={{ top: 'always', horizontal: 'never' }}
     >
       <Block flex={0.06} style={styles.header}>
-        {/* <Image styles={styles.logo} source={Images.Logo} /> */}
+           <Icon
+            size={46}
+            color={argonTheme.COLORS.ICON}
+            name="workspaces-outline"
+            family="MaterialIcons"
+            style={styles.inputIcons}
+          />
       </Block>
       <Block flex style={{ paddingLeft: 8, paddingRight: 14 }}>
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
@@ -59,7 +49,7 @@ const CustomDrawerContent = ({ drawerPosition, navigation, profile, focused, sta
               <Text color="#8898AA" style={{ marginTop: 16, marginLeft: 8 }}>Account</Text>
             </Block>
             <DrawerCustomItem title="Detail"    navigation={navigation} />
-            <DrawerCustomItem title="Log out"  onPress={Disconnect(navigation)}/>
+            <DrawerCustomItem title="Log out"   navigation={navigation} isLogout />
         </ScrollView>
       </Block>
     </Block>
@@ -76,6 +66,9 @@ const styles = StyleSheet.create({
     paddingBottom: theme.SIZES.BASE,
     paddingTop: theme.SIZES.BASE * 3,
     justifyContent: 'center'
+  },
+  inputIcons: {
+    height: 46
   }
 });
 
