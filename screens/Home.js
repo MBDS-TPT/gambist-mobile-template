@@ -13,10 +13,10 @@ class Home extends React.Component {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.matches}>
         <Block>
-          <VsCard seeMore />
-          <VsCard seeMore />
-          <VsCard seeMore />
-          <VsCard seeMore />
+          <VsCard navigation={this.props.navigation} seeMore />
+          <VsCard navigation={this.props.navigation} seeMore />
+          <VsCard navigation={this.props.navigation} seeMore />
+          <VsCard navigation={this.props.navigation} seeMore />
         </Block>
       </ScrollView>
     )
