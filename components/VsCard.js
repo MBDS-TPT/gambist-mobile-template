@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
   },
   versus: {
       backgroundColor:theme.COLORS.FACEBOOK,
-      fontFamily:'Helvetica',
       fontSize: 30,
       position: 'absolute',
       backgroundColor: theme.COLORS.NEUTRAL,

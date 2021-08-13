@@ -33,7 +33,7 @@
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
-     "@react-native-async-storage/async-storage": "^1.15.5",
+    "@react-native-async-storage/async-storage": "^1.15.5",
     "@types/redux-thunk": "^2.1.0",
     "axios": "^0.21.1",
     "expo-status-bar": "~1.0.4",

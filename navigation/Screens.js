@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Easing, Animated, Dimensions } from "react-native";
 
 import { createStackNavigator } from "@react-navigation/stack";
@@ -16,6 +16,8 @@ import Register from "../screens/Register";
 import Login from '../screens/Login';
 import Detail from '../screens/Detail';
 import Profile from "../screens/Profile";
+
+import { CategoryService } from "../services/category/category.service";
 
 
 // drawer
@@ -75,6 +77,31 @@ function ProfileStack(props) {
 }
 
 function HomeStack(props) {
+  const [categories, setCategories] = useState([]);
+
+  const getAllCategories = async () => {
+    try {
+      let categorieslist = await CategoryService.getCategories();
+      console.log(categorieslist);
+      let categoriesTOUpdate = [
+        {
+          id: -1,
+          label: "All sports",
+          state: 0,
+        },
+        ...(categorieslist || []),
+      ]
+      setCategories(categoriesTOUpdate.map(cat => {
+        return { id: cat.id.toString(), title: cat.label }
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
   return (
     <Stack.Navigator mode="card" headerMode="screen">
       <Stack.Screen
@@ -87,7 +114,7 @@ function HomeStack(props) {
               search
               navigation={navigation}
               scene={scene}
-              tabs={categoryTabs}
+              tabs={categories}
             />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
@@ -99,6 +126,31 @@ function HomeStack(props) {
 
 
 function RecentMatchesStack(props) {
+  const [categories, setCategories] = useState([]);
+
+  const getAllCategories = async () => {
+    try {
+      let categorieslist = await CategoryService.getCategories();
+      console.log(categorieslist);
+      let categoriesTOUpdate = [
+        {
+          id: -1,
+          label: "All sports",
+          state: 0,
+        },
+        ...(categorieslist || []),
+      ]
+      setCategories(categoriesTOUpdate.map(cat => {
+        return { id: cat.id.toString(), title: cat.label }
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
   return (
     <Stack.Navigator mode="card" headerMode="screen">
       <Stack.Screen
@@ -110,7 +162,7 @@ function RecentMatchesStack(props) {
               title="Recent Matches"
               navigation={navigation}
               scene={scene}
-              tabs={categoryTabs}
+              tabs={categories}
             />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
