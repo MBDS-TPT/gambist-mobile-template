@@ -18,7 +18,7 @@ class VsCard extends React.Component {
                 flex
                 borderless
                 item={
-                    matches[0]
+                  this.props.matchpassed.teamA
                 }
                 style={styles.card}
                 imageStyle={styles.cardImageRadius}
@@ -29,10 +29,9 @@ class VsCard extends React.Component {
                 flex
                 borderless
                 item={
-                    matches[1]
+                  this.props.matchpassed.teamB
                 }
                 style={styles.card}
-                location="Los Angeles, CA"
                 imageStyle={styles.cardImageRadius}
                 imageBlockStyle={{ padding: theme.SIZES.BASE / 2 }}
             />

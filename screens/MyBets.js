@@ -1,34 +1,59 @@
-import React from 'react';
-import { StyleSheet, Dimensions, ScrollView } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { StyleSheet, Dimensions, ScrollView, RefreshControl } from 'react-native';
 import { Block, theme } from 'galio-framework';
 
 import { Card, VsCard } from '../components';
 const { width } = Dimensions.get('screen');
 import matches from '../constants/matches';
 
-class MyBets extends React.Component {
-  renderMatches = () => {
-    return (
+import { BetService } from "../services/bet/bet.service";
+
+function MyBets(props) {
+  const [betslist, setBetsList] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    try {
+      setRefreshing(true);
+      BetService.getUserBets()
+        .then((data) => {
+          setBetsList(data);
+          setRefreshing(false);
+        })
+        .catch((error) => alert(error));
+    } catch (error) {
+      alert(error);
+    }
+  }, []);
+
+  const getAllUserBets = async () => {
+    try {
+      let bets = await BetService.getUserBets();
+      setBetsList(bets);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllUserBets();
+  }, []);
+  return (
+    <Block flex center style={styles.home}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.matches}>
+        contentContainerStyle={styles.matches}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <Block>
-          <VsCard navigation={this.props.navigation} seeMore />
-          <VsCard navigation={this.props.navigation} seeMore />
-          <VsCard navigation={this.props.navigation} seeMore />
-          <VsCard navigation={this.props.navigation} seeMore />
+          {betslist.map(bet => {
+            return <VsCard seeMore matchpassed={bet.match}/>
+          })}
         </Block>
       </ScrollView>
-    )
-  }
-
-  render() {
-    return (
-      <Block flex center style={styles.home}>
-        {this.renderMatches()}
-      </Block>
-    );
-  }
+    </Block>
+  );
 }
 
 const styles = StyleSheet.create({
