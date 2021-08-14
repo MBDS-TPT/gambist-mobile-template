@@ -78,6 +78,10 @@ const styles = StyleSheet.create({
   text: {
     textAlign:'right',
     marginBottom:20
+  },
+  cardImageRadius:  {
+    flex: 1,
+    resizeMode: 'contain'
   }
 });
 

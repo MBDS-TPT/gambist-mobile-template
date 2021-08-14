@@ -24,6 +24,10 @@ const thumbMeasure = (width - 48 - 32) / 3;
   currency: 'EUR',
 });*/
 
+const formatCurrency = (n) => {
+  return n.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+}
+
 const Profile = ({navigation, route}) => {
 
     const [currentProfile, setCurrentProfile] = useState({
@@ -127,7 +131,7 @@ const Profile = ({navigation, route}) => {
                 <Block flex>
                   <Block middle style={styles.nameInfo}>
                     <Text bold size={28} color="#32325D">
-                      {currentProfile.bankBalance} €
+                      {formatCurrency(currentProfile.bankBalance)} €
                     </Text>
                     <Text size={16} color="#32325D" style={{ marginTop: 10 }}>
                       {currentProfile.firstname} {currentProfile.lastname}
