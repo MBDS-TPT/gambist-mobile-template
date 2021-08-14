@@ -17,6 +17,7 @@ function Detail({ route, navigation }) {
 
   const { itemId } = route.params;
   const [matchDetail, setMatchDetail] = useState();
+  const [loading, setLoading] = useState(false);
 
   const [valueBet, setValueBet] = useState("");
   const [winnerTeam, setWinnerTeam] = useState("");
@@ -103,9 +104,10 @@ function Detail({ route, navigation }) {
         }else{
           bet.odds = matchDetail.oddsNul;
         }
-
+        setLoading(true);
         BetService.postBet(bet).then((res) => {
           if (res.result !== "KO") {
+            setLoading(false);
             Alert.alert(
               "Bet registered",
               "Your bet has been saved! You can see it by refreshing your bets page (drag the screen down)",
@@ -121,6 +123,7 @@ function Detail({ route, navigation }) {
         console.log(Number.isInteger(valueBet));
       }
     } catch (error) {
+      setLoading(false);
       setErrorMessage("Error: " + error);
     }
   };
@@ -231,7 +234,7 @@ function Detail({ route, navigation }) {
                 <Text size={12} color={argonTheme.COLORS.PRIMARY}>(Your winnings will be: {winnings})</Text>
               )}
               {errorMessage && <Text size={12} color={argonTheme.COLORS.ERROR}>{errorMessage}</Text>}
-              <Button color="default" style={styles.button} onPress={() => makeBet()}>
+              <Button color="default" style={styles.button} loading={loading} onPress={() => makeBet()}>
                 PLACE A BET
               </Button>
             </Block>
