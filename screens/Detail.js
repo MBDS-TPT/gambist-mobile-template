@@ -293,8 +293,9 @@ const styles = StyleSheet.create({
     backgroundColor:argonTheme.COLORS.HEADER,
     borderRadius: 4,
     borderColor: argonTheme.COLORS.BORDER,
-    height: 44,
-    backgroundColor: '#FFFFFF'
+    height: 37,
+    top: 6,
+    left: 15
   }
 });
 
