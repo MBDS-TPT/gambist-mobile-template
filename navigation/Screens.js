@@ -84,7 +84,6 @@ function HomeStack(props) {
   const getAllCategories = async () => {
     try {
       let categorieslist = await CategoryService.getCategories();
-      console.log(categorieslist);
       let categoriesTOUpdate = [
         {
           id: -1,
@@ -104,6 +103,7 @@ function HomeStack(props) {
   useEffect(() => {
     getAllCategories();
   }, []);
+  
   return (
     <Stack.Navigator mode="card" headerMode="screen">
       <Stack.Screen
@@ -120,6 +120,9 @@ function HomeStack(props) {
             />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+        initialParams={{
+           tabId: 1
         }}
       />
       <Stack.Screen
@@ -147,7 +150,6 @@ function RecentMatchesStack(props) {
   const getAllCategories = async () => {
     try {
       let categorieslist = await CategoryService.getCategories();
-      console.log(categorieslist);
       let categoriesTOUpdate = [
         {
           id: -1,
@@ -183,6 +185,9 @@ function RecentMatchesStack(props) {
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
+        initialParams={{
+          tabId: 1
+       }}
       />
       <Stack.Screen
         name="Detail"
@@ -203,6 +208,32 @@ function RecentMatchesStack(props) {
 }
 
 function MyBetsStack(props) {
+  const [categories, setCategories] = useState([]);
+
+  const getAllCategories = async () => {
+    try {
+      let categorieslist = await CategoryService.getCategories();
+      let categoriesTOUpdate = [
+        {
+          id: -1,
+          label: "All sports",
+          state: 0,
+        },
+        ...(categorieslist || []),
+      ]
+      setCategories(categoriesTOUpdate.map(cat => {
+        return { id: cat.id.toString(), title: cat.label }
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
+
+
   return (
     <Stack.Navigator mode="card" headerMode="screen">
       <Stack.Screen
@@ -214,10 +245,14 @@ function MyBetsStack(props) {
               title="My Bets"
               navigation={navigation}
               scene={scene}
+              tabs={categories}
             />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
+        initialParams={{
+          tabId: 1
+       }}
       />
       <Stack.Screen
         name="BetDetail"

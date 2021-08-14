@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Dimensions, ScrollView, RefreshControl } from 'react-native';
 import { Block, theme } from 'galio-framework';
+import {ActivityIndicator} from 'react-native';
 
 import { Card, VsCard, BetVsCard } from '../components';
 const { width } = Dimensions.get('screen');
@@ -8,7 +9,7 @@ import matches from '../constants/matches';
 
 import { BetService } from "../services/bet/bet.service";
 
-function MyBets(props) {
+function MyBets({navigation, route}) {
   const [betslist, setBetsList] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -26,9 +27,10 @@ function MyBets(props) {
     }
   }, []);
 
-  const getAllUserBets = async () => {
+  const getAllUserBets = async (categoryId) => {
     try {
-      let bets = await BetService.getUserBets();
+      let bets = await BetService.getUserBetsByCategory(categoryId);
+
       setBetsList(bets);
     } catch (error) {
       console.log(error);
@@ -36,8 +38,9 @@ function MyBets(props) {
   };
 
   useEffect(() => {
-    getAllUserBets();
-  }, []);
+    getAllUserBets(route.params.tabId);
+  }, [route.params.tabId]);
+
   return (
     <Block flex center style={styles.home}>
       <ScrollView
@@ -46,11 +49,22 @@ function MyBets(props) {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        <Block>
-          {betslist.map(bet => {
-            return <BetVsCard seeMore betpassed={bet} navigation={props.navigation}/>
-          })}
-        </Block>
+          {
+            betslist ? (
+            <Block>
+              {betslist.map((bet, index) => {
+                return <BetVsCard seeMore betpassed={bet} navigation={navigation}/>
+              })}
+            </Block>)
+          :(
+            <ActivityIndicator
+              animating={true}
+              color="#FFFFFF"
+              size="large"
+              style={styles.activityIndicator}
+            />
+          )
+        }
       </ScrollView>
     </Block>
   );
@@ -64,6 +78,10 @@ const styles = StyleSheet.create({
     width: width - theme.SIZES.BASE * 2,
     paddingVertical: theme.SIZES.BASE,
   },
+  activityIndicator: {
+    alignItems: 'center',
+    height: 10,
+  }
 });
 
 export default MyBets;

@@ -13,7 +13,7 @@ function Qrcode(props) {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [text, setText] = useState(
-      "Aucun QR code scanné pour le moment. Scannez le QR code d'un match pour accéder à sa page détail"
+      "No QR code scanned at the moment. Scan the QR code of a match to access its details page"
     );
     const [matchScanned, setMatchScanned] = useState();
     const [isMatchScanned, setIsMatchScanned] = useState(false);
@@ -33,7 +33,7 @@ function Qrcode(props) {
           setIsMatchScanned(true);
           setMatchScanned(idMatch);
           setText(
-            "Le détail du match est chargé. Toucher le bouton pour scanner un nouveau match."
+            "The match details are loaded. Touch the button to scan a new match."
           );
           console.log(
             `Bar code with type ${type} and data ${data} has been scanned!`
@@ -44,7 +44,7 @@ function Qrcode(props) {
             `Bar code with type ${type} and data ${data} has been scanned!`
           );
           const stringErrorScan =
-            "Veuillez scanner un QR Code de Match provenant de Gambist";
+            "Please scan a Match QR code from Gambist";
           setText(stringErrorScan);
         }
       }
@@ -52,7 +52,7 @@ function Qrcode(props) {
   
     const resetTextScanned = (isScanned) => {
       setScanned(isScanned);
-      setText("Scannez le QR code d'un match pour accéder à sa page détail");
+      setText("Scan the QR code of a match to access its details page");
       setMatchScanned(undefined);
       setIsMatchScanned(false);
     };

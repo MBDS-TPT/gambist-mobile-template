@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {
   StyleSheet,
   Dimensions,
@@ -8,17 +8,47 @@ import {
   Platform
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button } from "../components";
 import { Images, argonTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";
+import { UserService } from "../services/user/user.service";
+import { BetService } from "../services/bet/bet.service";
 
 const { width, height } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 
-class Profile extends React.Component {
-  render() {
+/*const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'EUR',
+});*/
+
+const Profile = ({navigation, route}) => {
+
+    const [currentProfile, setCurrentProfile] = useState({
+      firstName:'',
+      lastName:'',
+      bankBalance: 0,
+      won:0, 
+      lost:0,
+      bets:[]
+    });
+
+    const getCurrentProfile = async () => {
+      const userId = await AsyncStorage.getItem('userId');
+      let user = null;
+      if(userId){
+        user = await UserService.getUserById(userId);
+        stats = await BetService.getUserBetStat(userId);
+        setCurrentProfile({...user, ...stats.data});
+      }
+    }
+
+    useEffect(()=>{
+      getCurrentProfile();
+    },[]);
+
     return (
       <Block flex style={styles.profile}>
         <Block flex>
@@ -49,13 +79,13 @@ class Profile extends React.Component {
                       small
                       style={{ backgroundColor: argonTheme.COLORS.INFO }}
                     >
-                      RECHARGE
+                      UPGRADE
                     </Button>
                     <Button
                       small
                       style={{ backgroundColor: argonTheme.COLORS.DEFAULT }}
                     >
-                      BETS
+                      EDIT
                     </Button>
                   </Block>
                   <Block row space="between">
@@ -66,7 +96,7 @@ class Profile extends React.Component {
                         color="#525F7F"
                         style={{ marginBottom: 4 }}
                       >
-                        18
+                        {currentProfile.bets.length}
                       </Text>
                       <Text size={12} color={argonTheme.COLORS.TEXT}>Bets</Text>
                     </Block>
@@ -77,7 +107,7 @@ class Profile extends React.Component {
                         size={18}
                         style={{ marginBottom: 4 }}
                       >
-                        8
+                        {currentProfile.won}
                       </Text>
                       <Text size={12} color={argonTheme.COLORS.TEXT}>Wins</Text>
                     </Block>
@@ -88,7 +118,7 @@ class Profile extends React.Component {
                         size={18}
                         style={{ marginBottom: 4 }}
                       >
-                        10
+                        {currentProfile.lost}
                       </Text>
                       <Text size={12} color={argonTheme.COLORS.TEXT}>Loses</Text>
                     </Block>
@@ -97,34 +127,14 @@ class Profile extends React.Component {
                 <Block flex>
                   <Block middle style={styles.nameInfo}>
                     <Text bold size={28} color="#32325D">
-                      18,750
+                      {currentProfile.bankBalance} €
                     </Text>
                     <Text size={16} color="#32325D" style={{ marginTop: 10 }}>
-                      Jessica Jones
+                      {currentProfile.firstname} {currentProfile.lastname}
                     </Text>
                   </Block>
                   <Block middle style={{ marginTop: 30, marginBottom: 16 }}>
                     <Block style={styles.divider} />
-                  </Block>
-                  <Block middle>
-                    {/* <Text
-                      size={16}
-                      color="#525F7F"
-                      style={{ textAlign: "center" }}
-                    >
-                      An artist of considerable range, Jessica name taken by
-                      Melbourne …
-                    </Text> */}
-                    {/* <Button
-                      color="transparent"
-                      textStyle={{
-                        color: "#233DD2",
-                        fontWeight: "500",
-                        fontSize: 16
-                      }}
-                    >
-                      Show more
-                    </Button> */}
                   </Block>
                   <Block
                     row
@@ -137,10 +147,31 @@ class Profile extends React.Component {
                       small
                       color="transparent"
                       textStyle={{ color: "#5E72E4", fontSize: 12, marginLeft: 24 }}
+                      onPress={()=>{navigation.navigate('My Bets')}}
                     >
                       View all
                     </Button>
                   </Block>
+                  <Block middle>
+                    <Text
+                      size={8}
+                      color="#525F7F"
+                      style={{ textAlign: "center" }}
+                    >
+                    For information on support measures, please visit our Responsible Gambling Help page.
+                    </Text>
+                    <Text
+                      color="transparent"
+                      style={{
+                        color: "#233DD2",
+                        fontWeight: "500",
+                        fontSize: 8
+                      }}
+                    >
+                       © 2021 Gambist. All rights reserved.
+                    </Text>
+                  </Block>
+                  
                 </Block>
               </Block>
             </ScrollView>
@@ -149,7 +180,6 @@ class Profile extends React.Component {
         
       </Block>
     );
-  }
 }
 
 const styles = StyleSheet.create({

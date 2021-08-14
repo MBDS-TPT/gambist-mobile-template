@@ -15,7 +15,7 @@ export default abstract class BasicService {
                     paramsString = searchParams.toString();
             }
             const res = await fetch(getBaseUrl()+ uri + (params ? "?" + paramsString : ""));
-            console.log("Response from  ", getBaseUrl());
+            console.log(getBaseUrl()+ uri + (params ? "?" + paramsString : ""));
             return await res.json()
         } catch(error) {
             console.error("error >", error)
@@ -23,7 +23,6 @@ export default abstract class BasicService {
     }
 
     static async postData(uri: string, params: any, method='POST') {
-        console.log('Debugging');
         const response = await fetch(getBaseUrl()+ uri, {
             method: method,
             body: JSON.stringify(params),
@@ -31,7 +30,6 @@ export default abstract class BasicService {
                 "Content-type": "application/json; charset=UTF-8"
             }
         })
-        console.log("Response from  ", getBaseUrl());
         return response.json();
         // .then(response => response.json())
         // .then(json => console.log(json));

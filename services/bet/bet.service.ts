@@ -102,4 +102,8 @@ export class BetService extends BasicService {
         }        
     }
 
+    static async getUserBetStat(userid) { 
+        return await BasicService.fetchData(Config.Bet.BetStat, {userid: userid});
+    }
+
 }

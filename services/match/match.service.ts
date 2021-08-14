@@ -13,6 +13,12 @@ export class MatchService extends BasicService {
             categoryId: categoryId
         });
     }
+
+    static async getAllMatchByCategory(categoryId: any) {
+        return BasicService.fetchData(Config.Match.FindAll, {
+            categoryId: categoryId
+        });
+    }
     
     static async getUpcomingMatchGroupedByCategory() {
         return BasicService.fetchData(Config.Match.UpcomingMatchGroupedByCategory);
@@ -37,7 +43,7 @@ export class MatchService extends BasicService {
 
     /**
      * retourne le match le plus proche
-     * @param matches 
+     * @param matches x
      */
     static getUpcomingMatch(matches: any, categories: any[]) {
         let time = 0;
