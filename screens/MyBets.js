@@ -52,8 +52,8 @@ function MyBets({navigation, route}) {
           {
             betslist ? (
             <Block>
-              {betslist.map(bet => {
-                return <VsCard seeMore matchpassed={bet.match}/>
+              {betslist.map((bet, index) => {
+                return <VsCard key={index} seeMore matchpassed={bet.match}/>
               })}
             </Block>)
           :(

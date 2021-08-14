@@ -30,8 +30,8 @@ function RecentMatches({navigation, route}) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.matches}>
         <Block>
-          {matcheslist.map(match => {
-            return <VsCard seeMore matchpassed={match}/>
+          {matcheslist.map((match, index) => {
+            return <VsCard key={index} seeMore matchpassed={match}/>
           })}
         </Block>
       </ScrollView>
