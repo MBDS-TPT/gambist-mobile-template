@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, Dimensions, ScrollView, Alert, TextInput } from 'react-native';
 import { Block, theme, Text } from 'galio-framework';
 
 import { Card, VsCard, Select, Button, Input , Icon} from '../components';
@@ -7,12 +7,21 @@ import { argonTheme } from '../constants';
 const { width } = Dimensions.get('screen');
 
 import { MatchService } from "../services/match/match.service";
+import { BetService } from "../services/bet/bet.service";
 import Moment from "moment";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Detail({ route, navigation }) {
 
   const { itemId } = route.params;
   const [matchDetail, setMatchDetail] = useState();
+
+  const [valueBet, setValueBet] = useState("");
+  const [winnerTeam, setWinnerTeam] = useState("");
+  const [errorMessage, setErrorMessage] = useState();
+  const [oddChosed, setOddChosed] = useState();
+  const [winnings, setWinnings] = useState();
 
   const getMatchDetails = async () => {
     try {
@@ -21,6 +30,97 @@ function Detail({ route, navigation }) {
       setMatchDetail(matchDetail);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const getSelectValue = (index, value) => {
+    try {
+      const coteTeamA = matchDetail.oddsA?.toFixed(2);
+      const coteTeamB = matchDetail.oddsB?.toFixed(2);
+      const coteMatchNul = matchDetail.oddsNul?.toFixed(2);
+      setWinnerTeam(value);
+      if (value === "Team A") {
+        setOddChosed(coteTeamA);
+      } else if (value === "Team B") {
+        setOddChosed(coteTeamB);
+      } else {
+        setOddChosed(coteMatchNul);
+      }
+      setErrorMessage(undefined);
+      setWinnings(undefined);
+      setValueBet("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const convertValueBet = (e) => {
+    console.log("Je suis bro");
+    if (e.nativeEvent.text === "") {
+      console.log("Je suis la bro");
+      setValueBet("");
+      setErrorMessage("Fill in the field Amount you bet");
+    } else {
+      console.log("Je suis la la bro");
+      const valBetinteger = parseInt(e.nativeEvent.text);
+      if (valBetinteger.toString() === "NaN") {
+        console.log("Je suis la la la bro");
+        setValueBet("");
+        setErrorMessage("Fill in the field Amount you bet");
+      } else {
+        console.log("Je suis la la la la bro");
+        const valWinning =
+          valBetinteger * Number.parseFloat(oddChosed ? oddChosed : "0");
+        setWinnings(valWinning.toFixed(2));
+        setValueBet(valBetinteger.toString());
+        setErrorMessage(undefined);
+      }
+    }
+  };
+
+  const makeBet = async () => {
+    try {
+      if (winnerTeam === "" || winnerTeam == null) {
+        setErrorMessage("Please select a result for the match");
+      } else if (valueBet === "") {
+        setErrorMessage("Fill in the field Amount you bet");
+      } else {
+        setErrorMessage(undefined);
+        const userId = await AsyncStorage.getItem("userId");
+        const bet = {
+          betDate: new Date(),
+          betValue: Number.parseInt(valueBet),
+          matchId: matchDetail.id,
+          userId: userId,
+        };
+        if (winnerTeam === "Team A") {
+          bet.teamId = matchDetail.teamA?.id;
+          bet.odds = matchDetail.oddsA;
+        } else if (winnerTeam === "Team B") {
+          bet.teamId = matchDetail.teamB?.id;
+          bet.odds = matchDetail.oddsB;
+        }else{
+          bet.odds = matchDetail.oddsNul;
+        }
+
+        BetService.postBet(bet).then((res) => {
+          if (res.result !== "KO") {
+            Alert.alert(
+              "Bet registered",
+              "Your bet has been saved! You can see it by refreshing your bets page (drag the screen down)",
+              [{ text: "OK", onPress: () => navigation.navigate("BetDetail", { bet: res.data}) }]
+            );
+          } else {
+            setErrorMessage("Error occurred:" + res.message);
+          }
+        });
+        console.log(bet);
+        console.log(valueBet);
+        console.log(winnerTeam);
+        console.log(Number.isInteger(valueBet));
+      }
+    } catch (error) {
+      setErrorMessage("Error: " + error);
     }
   };
 
@@ -96,25 +196,29 @@ function Detail({ route, navigation }) {
                 <Block flex left style={{marginTop: 15}}>
                   <Select
                     color={argonTheme.COLORS.PRIMARY}
-                    options={matchDetail ? [matchDetail.teamA.name, "Nul", matchDetail.teamB.name] : []}
+                    options={matchDetail ? ["Team A", "Nul", "Team B"] : []}
+                    onSelect={getSelectValue}
                   />
                 </Block>
                 
                 <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-                  <Input right placeholder="0.00" type="decimal-pad" style={styles.bet} 
-                                                                    iconContent={<Icon
-                                                                    size={10}
-                                                                    color={argonTheme.COLORS.ICON}
-                                                                    name="euro"
-                                                                    family="MaterialIcons"
-                                                                    style={styles.inputIcons}
-                                                                  />} />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Mise de votre pari"
+                    keyboardType="numeric"
+                    onSubmitEditing={(e) => convertValueBet(e)}
+                    defaultValue={valueBet}
+                  />
                 </Block>
             </Block>
 
             </Block>
             <Block center>
-              <Button color="default" style={styles.button}>
+              {winnings != null && winnings != "" && (
+                <Text size={12} color={argonTheme.COLORS.PRIMARY}>(Your winnings will be: {winnings})</Text>
+              )}
+              {errorMessage && <Text size={12} color={argonTheme.COLORS.ERROR}>{errorMessage}</Text>}
+              <Button color="default" style={styles.button} onPress={() => makeBet()}>
                 PLACE A BET
               </Button>
             </Block>

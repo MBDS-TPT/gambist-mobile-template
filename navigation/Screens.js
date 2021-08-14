@@ -139,6 +139,20 @@ function HomeStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
       />
+      <Stack.Screen
+        name="BetDetail"
+        component={BetDetail}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Bet Detail"
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
     </Stack.Navigator>
   );
 }

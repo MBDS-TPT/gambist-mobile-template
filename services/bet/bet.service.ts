@@ -11,7 +11,7 @@ export class BetService extends BasicService {
         });
     } 
 
-    static async postBet(bet: Bet) {
+    static async postBet(bet: any) {
         try {
             const userId = await AsyncStorage.getItem("userId");
 
