@@ -6,26 +6,27 @@ import { Card, VsCard, Select, Button, Input , Icon} from '../components';
 import { argonTheme } from '../constants';
 const { width } = Dimensions.get('screen');
 
-import { MatchService } from "../services/match/match.service";
+import { BetService } from "../services/bet/bet.service";
 import Moment from "moment";
 
-function Detail({ route, navigation }) {
+function BetDetail({ route, navigation }) {
 
-  const { itemId } = route.params;
-  const [matchDetail, setMatchDetail] = useState();
+  const { bet } = route.params;
+  const [betDetail, setBetDetail] = useState();
+  const [betTotal, setBetTotal] = useState(0);
 
-  const getMatchDetails = async () => {
+  const getBetDetails = async () => {
     try {
-      let matchDetail = await MatchService.getMatch(itemId);
-      console.log(matchDetail);
-      setMatchDetail(matchDetail);
+      setBetDetail(bet);
+      let total = bet.betValue * bet.odds;
+      setBetTotal(total);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getMatchDetails();
+    getBetDetails();
   }, []);
 
   return (
@@ -37,15 +38,15 @@ function Detail({ route, navigation }) {
           <Text color={argonTheme.COLORS.PRIMARY} size={12} onPress={()=>navigation.goBack()}> {"< "}Back</Text>
           <Block flex style={styles.nameInfo}>
               <Text size={10} bold color="#525F7F" style={{ marginTop: 10 }}>
-                Match date: {matchDetail && Moment(matchDetail.matchDate).format("DD-MM-YYYY HH:mm")}
+                Bet date: {betDetail && Moment(betDetail.match.betDate).format("DD-MM-YYYY HH:mm")}
+              </Text>
+              <Text size={10} bold color="#525F7F" style={{ marginTop: 10 }}>
+                Match date: {betDetail && Moment(betDetail.match.matchDate).format("DD-MM-YYYY HH:mm")}
               </Text>
             </Block>
-
-            {matchDetail && 
-            <VsCard matchpassed={matchDetail} navigation={navigation}/>
+            {betDetail && 
+            <VsCard matchpassed={betDetail.match} navigation={navigation}/>
             }
-            
-
             <Block flex style={styles.odds}>
               <Text size={10} bold color="#525F7F" style={{ marginTop: 10 }}>
                 Odds: 
@@ -60,9 +61,9 @@ function Detail({ route, navigation }) {
                     color={argonTheme.COLORS.ERROR}
                     style={{ marginBottom: 4 }}
                   >
-                    {matchDetail && matchDetail.oddsA.toFixed(2)}
+                    {betDetail && betDetail.match.oddsA.toFixed(2)}
                   </Text>
-                  <Text size={12} color={argonTheme.COLORS.ERROR}>{matchDetail && matchDetail.teamA.name}</Text>
+                  <Text size={12} color={argonTheme.COLORS.ERROR}>{betDetail && betDetail.match.teamA.name}</Text>
                 </Block>
                 <Block middle>
                   <Text
@@ -71,7 +72,7 @@ function Detail({ route, navigation }) {
                     size={18}
                     style={{ marginBottom: 4 }}
                   >
-                    {matchDetail && matchDetail.oddsNul.toFixed(2)}
+                    {betDetail && betDetail.match.oddsNul.toFixed(2)}
                   </Text>
                   <Text size={12} color={argonTheme.COLORS.DEFAULT}>Nul</Text>
                 </Block>
@@ -82,43 +83,32 @@ function Detail({ route, navigation }) {
                     size={20}
                     style={{ marginBottom: 4 }}
                   >
-                    {matchDetail && matchDetail.oddsB.toFixed(2)}
+                    {betDetail && betDetail.match.oddsB.toFixed(2)}
                   </Text>
-                  <Text size={12} color={argonTheme.COLORS.PRIMARY}>{matchDetail && matchDetail.teamB.name}</Text>
+                  <Text size={12} color={argonTheme.COLORS.PRIMARY}>{betDetail && betDetail.match.teamB.name}</Text>
                 </Block>
               </Block>
-              <Block flex style={styles.odds}>
-                <Text size={10} bold color="#525F7F" style={{ marginTop: 10 }}>
-                  Place a bet: 
-                </Text>
-              </Block>
-              <Block row space="around">
-                <Block flex left style={{marginTop: 15}}>
-                  <Select
-                    color={argonTheme.COLORS.PRIMARY}
-                    options={matchDetail ? [matchDetail.teamA.name, "Nul", matchDetail.teamB.name] : []}
-                  />
-                </Block>
-                
-                <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-                  <Input right placeholder="0.00" type="decimal-pad" style={styles.bet} 
-                                                                    iconContent={<Icon
-                                                                    size={10}
-                                                                    color={argonTheme.COLORS.ICON}
-                                                                    name="euro"
-                                                                    family="MaterialIcons"
-                                                                    style={styles.inputIcons}
-                                                                  />} />
-                </Block>
             </Block>
-
+            <Block flex style={styles.odds}>
+              <Text size={14} bold color="#525F7F" style={{ marginTop: 20 }}>
+                Team chosen: {betDetail && betDetail.team ? betDetail.team.name : "Nul chosen" }
+              </Text>
             </Block>
-            <Block center>
-              <Button color="default" style={styles.button}>
-                PLACE A BET
-              </Button>
+            <Block flex style={styles.odds}>
+              <Text size={14} bold color="#525F7F" style={{ marginTop: 5 }}>
+                Odds of your choice: {betDetail && betDetail.odds.toFixed(2)}
+              </Text>
             </Block>
-          
+            <Block flex style={styles.odds}>
+              <Text size={14} bold color="#525F7F" style={{ marginTop: 5 }}>
+                Bet value: {betDetail && betDetail.betValue}
+              </Text>
+            </Block>
+            <Block flex style={styles.odds}>
+              <Text size={14} bold color="#525F7F" style={{ marginTop: 5 }}>
+                Bet value: {betDetail && betTotal.toFixed(2)} €
+              </Text>
+            </Block>
         </Block>
       </ScrollView>
     </Block>
@@ -170,4 +160,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Detail;
+export default BetDetail;

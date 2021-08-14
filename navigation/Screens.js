@@ -9,6 +9,7 @@ import { Block } from "galio-framework";
 
 // screens
 import Home from "../screens/Home";
+import BetDetail from "../screens/BetDetail";
 import RecentMatches from "../screens/RecentMatches";
 import MyBets from "../screens/MyBets";
 import Onboarding from "../screens/Onboarding";
@@ -121,6 +122,20 @@ function HomeStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
       />
+      <Stack.Screen
+        name="Detail"
+        component={Detail}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Detail"
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -169,6 +184,20 @@ function RecentMatchesStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
       />
+      <Stack.Screen
+        name="Detail"
+        component={Detail}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Detail"
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -183,6 +212,20 @@ function MyBetsStack(props) {
           header: ({ navigation, scene }) => (
             <Header
               title="My Bets"
+              navigation={navigation}
+              scene={scene}
+            />
+          ),
+          cardStyle: { backgroundColor: "#F8F9FE" }
+        }}
+      />
+      <Stack.Screen
+        name="BetDetail"
+        component={BetDetail}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Bet Detail"
               navigation={navigation}
               scene={scene}
             />
@@ -211,13 +254,6 @@ function QrCodeStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
       />
-    </Stack.Navigator>
-  );
-}
-
-function DetailStack(props) {
-  return (
-    <Stack.Navigator mode="card" headerMode="screen">
       <Stack.Screen
         name="Detail"
         component={Detail}
@@ -303,7 +339,6 @@ function AppStack(props) {
       <Drawer.Screen name="Recent Matches" component={RecentMatchesStack} />
       <Drawer.Screen name="My Bets" component={MyBetsStack} />
       <Drawer.Screen name="Profile" component={ProfileStack} />
-      <Drawer.Screen name="Detail" component={DetailStack} />
       <Drawer.Screen name="QR Code" component={QrCodeStack} />
     </Drawer.Navigator>
   );

@@ -30,6 +30,8 @@ function Qrcode(props) {
       if (typeof data == "string") {
         if (data.includes("/match/get?id=")) {
           const idMatch = data.split("get?id=")[1];
+          setIsMatchScanned(true);
+          setMatchScanned(idMatch);
           setText(
             "Le détail du match est chargé. Toucher le bouton pour scanner un nouveau match."
           );
@@ -37,15 +39,6 @@ function Qrcode(props) {
             `Bar code with type ${type} and data ${data} has been scanned!`
           );
           console.log(`Un match est scanne!`);
-          MatchService.getMatch(idMatch)
-            .then((data) => {
-              console.log(data);
-              setMatchScanned(data);
-              setIsMatchScanned(true);
-            })
-            .catch((error) => {
-              setText("Une erreur est survenue: " + error);
-            });
         } else {
           console.log(
             `Bar code with type ${type} and data ${data} has been scanned!`
@@ -65,7 +58,7 @@ function Qrcode(props) {
     };
   
     const goToMatchDetailsScanned = () => {
-      alert("navigation à faire");
+      props.navigation.navigate("Detail", { itemId: matchScanned});
     };
 
     useEffect(() => {

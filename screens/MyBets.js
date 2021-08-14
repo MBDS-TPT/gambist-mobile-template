@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { StyleSheet, Dimensions, ScrollView, RefreshControl } from 'react-native';
 import { Block, theme } from 'galio-framework';
 
-import { Card, VsCard } from '../components';
+import { Card, VsCard, BetVsCard } from '../components';
 const { width } = Dimensions.get('screen');
 import matches from '../constants/matches';
 
@@ -48,7 +48,7 @@ function MyBets(props) {
         }>
         <Block>
           {betslist.map(bet => {
-            return <VsCard seeMore matchpassed={bet.match}/>
+            return <BetVsCard seeMore betpassed={bet} navigation={props.navigation}/>
           })}
         </Block>
       </ScrollView>

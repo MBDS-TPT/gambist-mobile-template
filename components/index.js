@@ -7,6 +7,7 @@ import Input from './Input';
 import Switch from './Switch';
 import Select from './Select';
 import VsCard from './VsCard';
+import BetVsCard from './BetVsCard';
 export {
   Button,
   Card,
@@ -16,5 +17,6 @@ export {
   Header,
   Switch, 
   Select,
-  VsCard
+  VsCard,
+  BetVsCard
 };

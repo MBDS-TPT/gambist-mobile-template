@@ -6,7 +6,7 @@ import { argonTheme } from '../constants';
 import matches from '../constants/matches';
 import Card from './Card';
 
-class VsCard extends React.Component {
+class BetVsCard extends React.Component {
   
   render() {
   const {seeMore, navigation} = this.props;
@@ -18,7 +18,7 @@ class VsCard extends React.Component {
                 flex
                 borderless
                 item={
-                  this.props.matchpassed.teamA
+                  this.props.betpassed.match.teamA
                 }
                 style={styles.card}
                 imageStyle={styles.cardImageRadius}
@@ -29,7 +29,7 @@ class VsCard extends React.Component {
                 flex
                 borderless
                 item={
-                  this.props.matchpassed.teamB
+                  this.props.betpassed.match.teamB
                 }
                 style={styles.card}
                 imageStyle={styles.cardImageRadius}
@@ -39,8 +39,8 @@ class VsCard extends React.Component {
         {seeMore && (
           <Block>
             <Text onPress={()=> {
-              console.log(this.props.matchpassed.id);
-              navigation.navigate("Detail", { itemId: this.props.matchpassed.id});
+              console.log(this.props.betpassed.id);
+              navigation.navigate("BetDetail", { bet: this.props.betpassed});
               }} size={12} style={styles.text} color={argonTheme.COLORS.ACTIVE} bold>See more {'>>'} </Text>
           </Block>
         )}
@@ -49,7 +49,7 @@ class VsCard extends React.Component {
   }
 }
 
-VsCard.propTypes = {
+BetVsCard.propTypes = {
   seeMore: PropTypes.bool,
 }
 
@@ -81,4 +81,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default (VsCard);
+export default (BetVsCard);
