@@ -9,7 +9,7 @@ import { argonTheme } from '../constants';
 
 class DropDown extends React.Component {
   state = {
-    value: "Team A",
+    value: "Result",
   }
 
   handleOnSelect = (index, value) => {
