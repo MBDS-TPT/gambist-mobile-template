@@ -8,13 +8,12 @@ import matches from '../constants/matches';
 
 import { MatchService } from "../services/match/match.service";
 
-function RecentMatches(props) {
+function RecentMatches({navigation, route}) {
   const [matcheslist, setMatchesList] = useState([]);
 
-  getAllMatches = async () => {
+  const getRecentMatches = async (categoryId) => {
     try {
-      let matches = await MatchService.getAllMatch();
-      console.log(matches.data);
+      let matches = await MatchService.getAllMatchByCategory(categoryId);
       setMatchesList(matches.data);
     } catch (error) {
       console.log(error);
@@ -22,8 +21,9 @@ function RecentMatches(props) {
   };
 
   useEffect(() => {
-    getAllMatches();
-  }, []);
+    getRecentMatches(route.params.tabId);
+  }, [route.params.tabId]);
+
   return (
     <Block flex center style={styles.home}>
       <ScrollView
