@@ -10,7 +10,6 @@ import { MatchService } from "../services/match/match.service";
 
 function Home({navigation, route}) {
   const [matcheslist, setMatchesList] = useState([]);
-  const [idCategory, setIdCategory] = useState([]);
 
   const getHomeMatches = async (categoryId) => {
     try {

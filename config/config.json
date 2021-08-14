@@ -40,7 +40,8 @@
         "FindByUserAndCategory": "bet/findByUserAndCategory",
         "Add": "bet/add",
         "Edit": "bet/edit",
-        "Delete": "bet/delete"
+        "Delete": "bet/delete",
+        "BetStat": "bet/getUserBetStatistics"
     },
     "User": {
         "FindById": "user/get",
@@ -51,6 +52,7 @@
     },
     "Authentification": {
         "Login": "authentification/login",
-        "Registration": "authentification/registration"
+        "Registration": "authentification/registration",
+        "UserInfos": "user/getUserById"
     }
 }
