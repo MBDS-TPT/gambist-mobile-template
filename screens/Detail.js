@@ -114,6 +114,7 @@ function Detail({ route, navigation }) {
               [{ text: "OK", onPress: () => navigation.navigate("BetDetail", { bet: res.data}) }]
             );
           } else {
+            setLoading(false);
             setErrorMessage("Error occurred:" + res.message);
           }
         });
