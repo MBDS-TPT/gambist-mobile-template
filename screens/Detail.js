@@ -204,13 +204,23 @@ function Detail({ route, navigation }) {
                 <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
                   <Input
                     style={styles.mise}
-                    placeholder="0.00 €"
+                    placeholder="0.00"
                     right
                     type="decimal-pad"
                     keyboardType="numeric"
                     onSubmitEditing={(e) => convertValueBet(e)}
                     defaultValue={valueBet}
                     placeholderTextColor={argonTheme.COLORS.MUTED}
+                    // icon={
+                    //   <Icon
+                    //   size={10}
+                    //   color={argonTheme.COLORS.ICON}
+                    //   name="euro"
+                    //   family="MaterialIcons"
+                    //   style={styles.inputIcons}
+                    // />}
+                    icon="euro"
+                    family="MaterialIcons"
                   />
                 </Block>
             </Block>
