@@ -7,6 +7,7 @@ const { width } = Dimensions.get('screen');
 
 import { MatchService } from "../services/match/match.service";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import { Images, argonTheme } from "../constants";
 
 function Qrcode(props) {
     const [hasPermission, setHasPermission] = useState(null);
@@ -15,6 +16,7 @@ function Qrcode(props) {
       "Aucun QR code scanné pour le moment. Scannez le QR code d'un match pour accéder à sa page détail"
     );
     const [matchScanned, setMatchScanned] = useState();
+    const [isMatchScanned, setIsMatchScanned] = useState(false);
   
     const askForCameraPermission = () => {
       (async () => {
@@ -39,6 +41,7 @@ function Qrcode(props) {
             .then((data) => {
               console.log(data);
               setMatchScanned(data);
+              setIsMatchScanned(true);
             })
             .catch((error) => {
               setText("Une erreur est survenue: " + error);
@@ -58,6 +61,7 @@ function Qrcode(props) {
       setScanned(isScanned);
       setText("Scannez le QR code d'un match pour accéder à sa page détail");
       setMatchScanned(undefined);
+      setIsMatchScanned(false);
     };
   
     const goToMatchDetailsScanned = () => {
@@ -80,60 +84,93 @@ function Qrcode(props) {
       }
       if (hasPermission === false) {
         return (
-          <Block>
-            <ScrollView
-              showsVerticalScrollIndicator={false}>
-              <Block>
-                <Text>Permission non accordée</Text>
-                <Button onPress={() => askForCameraPermission()}>
-                  <Text>
-                  Demander la permission pour la caméra
-                  </Text>
+          <Block style={styles.container}>
+              <Block style={styles.containerscrollblock}>
+                <Text style={styles.textContainer}>
+                  Not allowed to access the camera
+                </Text>
+                <Button
+                  style={styles.stylebutton}
+                  onPress={() => askForCameraPermission()}
+                >
+                  ASK PERMISSION FOR CAMERA
                 </Button>
               </Block>
-            </ScrollView>
           </Block>
         );
       }
     
       return (
-        <Block>
-          <ScrollView
-            showsVerticalScrollIndicator={false}>
-            <Block>
+        <Block style={styles.container}>
+            <Block style={styles.containerscrollbarcode}>
               <BarCodeScanner
                 onBarCodeScanned={({ type, data }) => {
                   scanned ? undefined : handleBarCodeScanned(type, data);
                 }}
+                style={{
+                    width: 400,
+                    height: 400,
+                }}
               />
             </Block>
-            <Block>
-              <Text>{text}</Text>
-              {matchScanned && (
-                <TouchableOpacity
+            <Block style={styles.containerscrollblock}>
+              <Text style={styles.textContainer}>{text}</Text>
+              {isMatchScanned && (
+                <Button
+                  style={styles.stylebutton}
                   onPress={goToMatchDetailsScanned}
                 >
-                  <Block>
-                    <Text>Accéder au détail du match</Text>
-                  </Block>
-                </TouchableOpacity>
+                  GO TO MATCH DETAILS
+                </Button>
               )}
               {scanned && (
-                <TouchableOpacity
+                <Button
+                  style={styles.stylebutton}
                   onPress={() => resetTextScanned(false)}
                 >
-                  <Block>
-                    <Text>Toucher pour scanner une nouvelle fois</Text>
-                  </Block>
-                </TouchableOpacity>
+                  SCAN AGAIN
+                </Button>
               )}
             </Block>
-          </ScrollView>
         </Block>
       );  
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  containerscroll: {
+    flex: 1,
+    alignItems: "center",
+  },
+  containerscrollblock: {
+    flex: 1,
+    alignItems: "center",
+    marginTop: 30
+  },
+  textContainer: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#525F7F",
+    textAlign: "center"
+  },
+  stylebutton: {
+    backgroundColor: argonTheme.COLORS.DEFAULT,
+    width: "80%",
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  containerscrollbarcode: {
+    flex: 2,
+    width: width,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  containerbutton: {
+    flex: 2,
+  },
 });
 
 export default Qrcode;
