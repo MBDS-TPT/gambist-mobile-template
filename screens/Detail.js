@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import { StyleSheet, Dimensions, ScrollView, Alert, TextInput } from 'react-native';
 import { Block, theme, Text } from 'galio-framework';
 
-import { Card, VsCard, Select, Button, Input , Icon} from '../components';
+import { Card, VsCard, Select, Button , Icon} from '../components';
+import { Input } from 'galio-framework';
 import { argonTheme } from '../constants';
 const { width } = Dimensions.get('screen');
 
@@ -144,7 +145,6 @@ function Detail({ route, navigation }) {
             {matchDetail && 
             <VsCard matchpassed={matchDetail} navigation={navigation}/>
             }
-            
 
             <Block flex style={styles.odds}>
               <Text size={10} bold color="#525F7F" style={{ marginTop: 10 }}>
@@ -202,12 +202,15 @@ function Detail({ route, navigation }) {
                 </Block>
                 
                 <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Mise de votre pari"
+                  <Input
+                    style={styles.mise}
+                    placeholder="0.00 €"
+                    right
+                    type="decimal-pad"
                     keyboardType="numeric"
                     onSubmitEditing={(e) => convertValueBet(e)}
                     defaultValue={valueBet}
+                    placeholderTextColor={argonTheme.COLORS.MUTED}
                   />
                 </Block>
             </Block>
@@ -271,6 +274,13 @@ const styles = StyleSheet.create({
   text: {
     textAlign:'right',
     marginBottom:20
+  },
+  mise: {
+    backgroundColor:argonTheme.COLORS.HEADER,
+    borderRadius: 4,
+    borderColor: argonTheme.COLORS.BORDER,
+    height: 44,
+    backgroundColor: '#FFFFFF'
   }
 });
 
